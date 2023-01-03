@@ -1,0 +1,32 @@
+entidades:
+    user:
+        name:               string
+        email:              string
+        password:           string
+        cyclo:              one-to-many
+        day_of_work:        one-to-many
+        task:               one-to-many
+
+    cyclo:
+        initial_date:       date
+        final_date:         date
+        duration:           tinyint
+        day_of_work:        one-to-many
+        user:               one-to-one
+    
+    day_of_work:
+        title:              string
+        date:               date
+        task:               one-to-many
+        cyclo:              one-to-one
+        user:               one-to-one
+
+    task:
+        title:              string
+        description:        string
+        status:             one-to-one
+        days_of_work:       one-to-one
+        user:               one-to-one
+      
+    status:
+        title:              string
