@@ -59,22 +59,6 @@ app.get('/cycles', async (req, res) => {
   res.json(cycles)  
 })
 
-app.post('/project', async (req, res) => {
-  ;
-  // const { name, description, inspiration, objective, nameOfCreator, email } = req.body
-  // const result = await prisma.tag.create(
-  //   {
-  //     data: {
-        
-  //     }
-  //   }
-  // )
-
-  // console.log(result);
-  
-  // res.json(result)
-})
-
 const server = app.listen(port, () =>
   console.log(`
 🚀 Server ready at: http://localhost:8080
