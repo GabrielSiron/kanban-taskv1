@@ -1,6 +1,11 @@
 import React from 'react';
-export const SignIn = () => {
+import { SignInPage, CallToActionContainer, SignInContainer } from './style';
+const SignIn = () => {
   return(
-    <h1>Sign in</h1>
+    <SignInPage>
+        <CallToActionContainer></CallToActionContainer>
+        <SignInContainer></SignInContainer>
+    </SignInPage>
   )
 }
+export default SignIn;
