@@ -1,2 +1,3 @@
 rest-express/node_modules
 rest-express/package-lock.json
+rest-express/prisma/dev.db
