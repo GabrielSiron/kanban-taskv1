@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export function createEndpointsToTasks(app: any) {
+export function createEndpointsToTasks(app: any, sessions: Array<any>) {
     app.post('/task', async (req: Request, res: Response) => {
         const task = await prisma.task.create({
             data: req.body

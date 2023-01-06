@@ -3,9 +3,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-var sessions: Array<{ authenticationToken: string, userId: number }> = []
-
-export function createEndpointsToAutentication(app: any) {
+export function createEndpointsToAutentication(app: any, sessions: Array<any>) {
     app.post('/signup', async (req: Request, res: Response) => {
         const user = await prisma.user.findFirst(
             {
