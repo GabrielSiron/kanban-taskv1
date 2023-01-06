@@ -1,11 +1,10 @@
-import { Prisma, PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import express from 'express'
 import bodyParser from 'body-parser'
 import { signup } from './autentication'
+import { createEndpointsToTasks } from './endpoints/tasks'
 
-import { cyclesWithCountDays } from './interfaces/cycles'
-
-const port = 8080
+const port = 3000
 
 var cors = require('cors')
 
@@ -17,6 +16,7 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}))     
 app.use(cors())
 
+createEndpointsToTasks(app);
 
 app.post('/signup', async (req, res) => {
     signup(req, res)
