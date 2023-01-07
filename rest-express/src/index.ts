@@ -8,7 +8,9 @@ const port = process.env.PORT || "8080"
 
 var cors = require('cors')
 
-var sessions: Array<{ authenticationToken: string, userId: number }> = []
+var sessions: Array<{ authenticationToken: string, userId: number }> = [{ 
+  authenticationToken: 'token', userId: 1
+}]
 
 const app = express()
 

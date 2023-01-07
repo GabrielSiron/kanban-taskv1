@@ -8,8 +8,10 @@ const prisma = new PrismaClient()
 export function createEndpointsToCycles(app: any, sessions: Array<any>) {
     app.get('/cycles', async (req: Request, res: Response) => {
 
-        const token = req.headers['authorization'] || ''
+        var returnedCycles: Array<any> = []
 
+        const token = req.headers['authorization'] || ''
+        
         if(isAuthenticated(token, sessions)){
             const userId = getIdOfUserSession(token, sessions)
             const cycles = await prisma.cycle.findMany(
@@ -20,10 +22,20 @@ export function createEndpointsToCycles(app: any, sessions: Array<any>) {
                 }
               )
             
-              res.json(cycles)
+            cycles.forEach(async (cycle) => {
+                const tasks = await getTasks(cycle.id)
+                const completedTasks = await countCompletedTasks(tasks);
+                console.log(completedTasks);
+                
+                returnedCycles.push({...cycle, completedTasks: completedTasks})
+            })
+
+            res.json(cycles)
+
         } else {
             res.status(401).json({message: "Not Authorized"})
         }
+        
         
     })
 
@@ -42,7 +54,7 @@ export function createEndpointsToCycles(app: any, sessions: Array<any>) {
 
 async function getTasks(cycleId: number){
     
-    var tasks = []
+    var tasks: Array<any> = []
 
     const days = await prisma.day.findMany({
         where: {
@@ -56,4 +68,16 @@ async function getTasks(cycleId: number){
     days.forEach(day => {
         tasks.push(day.task)
     });
+
+    return tasks
+}
+
+async function countCompletedTasks(tasks: Array<any>){
+
+    const completedTasks = tasks.filter(async (task) => { 
+        const status = await task.status
+        return status == 'to do'
+    })
+
+    return completedTasks.length
 }
