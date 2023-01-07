@@ -45,6 +45,7 @@ model Task {
   id                Int @id @default(autoincrement())
   title             String
   description       String
+  status            String @default("to do")
   tag               Tag? @relation(fields: [tagId], references: [id])
   tagId             Int? 
   day               Day? @relation(fields: [dayId], references: [id])
