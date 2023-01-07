@@ -36,10 +36,24 @@ export function createEndpointsToCycles(app: any, sessions: Array<any>) {
             }
         })
         .then((cycle) => res.status(200).json(cycle))
-        .catch((err) => res.status(500).json(err))
+        .catch((err) => res.status(500).json(err))  
+    })   
+}
 
-        
+async function getTasks(cycleId: number){
+    
+    var tasks = []
+
+    const days = await prisma.day.findMany({
+        where: {
+            cycleId: cycleId
+        },
+        include: {
+            task: true,
+        }
     })
 
-    
+    days.forEach(day => {
+        tasks.push(day.task)
+    });
 }
