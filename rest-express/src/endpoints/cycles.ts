@@ -36,10 +36,35 @@ export function createEndpointsToCycles(app: any, sessions: Array<any>) {
             }
         })
         .then((cycle) => res.status(200).json(cycle))
-        .catch((err) => res.status(500).json(err))
-
-        
+        .catch((err) => res.status(500).json(err))  
     })
 
+    app.put('/cycles/:id', async (req: Request, res: Response) => {
+
+        const token = req.headers['authorization'] || ''
+        const { id } = req.params
+
+        if(isAuthenticated(token, sessions)){
+            const userId = getIdOfUserSession(token, sessions)
+            const cycle = await prisma.cycle.findUniqueOrThrow({
+                where: {
+                    id: Number(id)
+                }
+            })
+
+            if(cycle.userId == userId){
+                const modifiedCycle = await prisma.cycle.update({
+                    where: {
+                        id: Number(id)
+                    },
+                    data: req.body
+                })
+
+                res.status(202).json(modifiedCycle)
+            }
+        } else {
+            res.status(401).json({message: "Not Authorized"})
+        }
+    })
     
 }
