@@ -1,70 +1,71 @@
 import { Request, Response } from 'express'
 import { PrismaClient } from '@prisma/client'
 
-import { isAuthenticated, getIdOfUserSession } from '../autentication'
+import { getIdOfUserSession } from '../autentication'
 
 const prisma = new PrismaClient()
 
 export function createEndpointsToCycles(app: any, sessions: Array<any>) {
-    app.get('/cycles', async (req: Request, res: Response) => {
+    app.get('/cycle', async (req: Request, res: Response) => {
 
-        const token = req.headers['authorization'] || ''
+        const userId = getUserId(req, sessions)
+        await getCycles(res, userId)
+    })
 
-        if(isAuthenticated(token, sessions)){
-            const userId = getIdOfUserSession(token, sessions)
-            const cycles = await prisma.cycle.findMany(
-                {
-                  where: {
-                    userId: userId,
-                  }
-                }
-              )
-            
-              res.json(cycles)
-        } else {
-            res.status(401).json({message: "Not Authorized"})
-        }
+    app.post('/cycle', async (req: Request, res: Response) => {
+
+        const userId = getUserId(req, sessions)
+        await createCycle(req, res, userId)
         
     })
 
-    app.post('/cycles', async (req: Request, res: Response) => {
-        const cycle = await prisma.cycle.create({
-            data: {
-                finalDate: req.body.finalDate,
-                initialDate: req.body.initialate,
-                duration: Number(req.body.duration)
-            }
-        })
-        .then((cycle) => res.status(200).json(cycle))
-        .catch((err) => res.status(500).json(err))  
-    })
-
-    app.put('/cycles/:id', async (req: Request, res: Response) => {
-
-        const token = req.headers['authorization'] || ''
-        const { id } = req.params
-
-        if(isAuthenticated(token, sessions)){
-            const userId = getIdOfUserSession(token, sessions)
-            const cycle = await prisma.cycle.findUniqueOrThrow({
-                where: {
-                    id: Number(id)
-                }
-            })
-
-            if(cycle.userId == userId){
-                const modifiedCycle = await prisma.cycle.update({
-                    where: {
-                        id: Number(id)
-                    },
-                    data: req.body
-                })
-
-                res.status(202).json(modifiedCycle)
-            }
-        } else {
-            res.status(401).json({message: "Not Authorized"})
-        }
+    app.put('/cycle/:id', async (req: Request, res: Response) => {
+        
+        await editCycle(req, res)
     })
     
+}
+
+async function getCycles(res: Response, userId: number){
+    
+    const cycles = await prisma.cycle.findMany(
+        {
+            where: { userId: userId, }
+        }
+    )
+
+    res.status(202).json(cycles)
+}
+
+async function createCycle(req: Request, res: Response, userId: number){
+    const cycle = await prisma.cycle.create({
+        data: {
+            finalDate: req.body.finalDate,
+            initialDate: req.body.initialate,
+            duration: Number(req.body.duration),
+            userId: userId
+        }
+    })
+
+    res.status(202).json(cycle)
+}
+
+async function editCycle(req: Request, res: Response){
+    
+    const { id } = req.params
+    
+    const modifiedCycle = await prisma.cycle.update({
+        where: {
+            id: Number(id),
+        },
+        data: req.body
+    })
+
+    res.status(202).json(modifiedCycle)
+}
+
+function getUserId(req: Request, sessions: Array<any>){
+    const token = req.headers['authorization'] || ''
+    const userId = getIdOfUserSession(token, sessions)
+    return userId
 }
