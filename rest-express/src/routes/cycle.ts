@@ -24,6 +24,11 @@ export function createRoutesToCycles(api: any, sessions: Array<any>) {
         await editCycle(req, res)
     })
     
+    api.delete('/cycle/:id', async (req: Request, res: Response) => {
+        
+        const { id } = req.params
+        await deleteCycle(res, Number(id))
+    })
 }
 
 async function getCycles(res: Response, userId: number){
@@ -62,6 +67,21 @@ async function editCycle(req: Request, res: Response){
     })
 
     res.status(202).json(modifiedCycle)
+}
+
+async function deleteCycle(res: Response, id: number){
+
+    await prisma.cycle.delete({
+        where: {
+            id: id
+        }
+    }).then(() => {
+        
+        res.status(202).json({message: "deleted!"})
+    }).catch(err => {
+
+        res.status(402).json(err)
+    })
 }
 
 function getUserId(req: Request, sessions: Array<any>){
