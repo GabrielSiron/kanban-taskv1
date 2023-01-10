@@ -5,7 +5,7 @@ import { getIdOfUserSession } from '../autentication'
 
 const prisma = new PrismaClient()
 
-export function createEndpointsToCycles(api: any, sessions: Array<any>) {
+export function createRoutesToCycles(api: any, sessions: Array<any>) {
     api.get('/cycle', async (req: Request, res: Response) => {
 
         const userId = getUserId(req, sessions)

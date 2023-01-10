@@ -21,11 +21,11 @@ export async function isPermittedChange(req: Request, res: Response, next: any){
       } 
   
       else if(entityOfRequest == "task"){
-        result = await prisma.$queryRaw<Cycle[]>`SELECT * FROM Task WHERE id = ${Number(id)}`
+        result = await prisma.$queryRaw<Task[]>`SELECT * FROM Task WHERE id = ${Number(id)}`
       }
   
       else if(entityOfRequest == "day"){
-        result = await prisma.$queryRaw<Cycle[]>`SELECT * FROM day WHERE id = ${Number(id)}`
+        result = await prisma.$queryRaw<Day[]>`SELECT * FROM day WHERE id = ${Number(id)}`
       }
       
       const uniqueResult = result[0]
@@ -83,4 +83,10 @@ export function initializeSessions(){
     } else {
         return []
     }
+}
+
+export function getUserId(req: Request, sessions: Array<any>){
+  const token = req.headers['authorization'] || ''
+  const userId = getIdOfUserSession(token, sessions)
+  return userId
 }

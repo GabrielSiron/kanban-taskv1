@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export function createEndpointsToAutentication(api: any, sessions: Array<any>) {
+export function createRoutesToAutentication(api: any, sessions: Array<any>) {
     api.post('/signup', async (req: Request, res: Response) => {
         const user = await prisma.user.findFirst(
             {
@@ -39,6 +39,8 @@ export function createEndpointsToAutentication(api: any, sessions: Array<any>) {
     
       if(user){
         if(user?.password == req.body.password) {
+          console.log(sessions);
+          
           var sessionsWithoutActualUser = sessions.filter(data => { return data.userId == user.id })
 
           if(sessionsWithoutActualUser.length == 0){
