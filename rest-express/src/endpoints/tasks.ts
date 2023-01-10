@@ -4,20 +4,20 @@ import { getIdOfUserSession } from '../autentication'
 
 const prisma = new PrismaClient()
 
-export function createEndpointsToTasks(app: any, sessions: Array<any>) {
-    app.get('/task', async (req: Request, res: Response) => {
+export function createEndpointsToTasks(api: any, sessions: Array<any>) {
+    api.get('/task', async (req: Request, res: Response) => {
 
         const userId = getUserId(req, sessions)
         await getTasks(res, userId)
     })
 
-    app.post('/task', async (req: Request, res: Response) => {
+    api.post('/task', async (req: Request, res: Response) => {
 
         const userId = getUserId(req, sessions)
         await createTask(req, res, userId)
     })
 
-    app.put('/task/:id', async (req: Request, res: Response) => {
+    api.put('/task/:id', async (req: Request, res: Response) => {
         await editTask(req, res)
     })
 }
