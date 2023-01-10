@@ -3,8 +3,8 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export function createEndpointsToAutentication(app: any, sessions: Array<any>) {
-    app.post('/signup', async (req: Request, res: Response) => {
+export function createEndpointsToAutentication(api: any, sessions: Array<any>) {
+    api.post('/signup', async (req: Request, res: Response) => {
         const user = await prisma.user.findFirst(
             {
               where: {
@@ -28,7 +28,7 @@ export function createEndpointsToAutentication(app: any, sessions: Array<any>) {
         res.status(401).json({message: 'User already exists'});
     })
     
-    app.post('/login', async (req: Request, res: Response) => {
+    api.post('/login', async (req: Request, res: Response) => {
       const user = await prisma.user.findFirst(
         {
           where: {
@@ -63,7 +63,7 @@ export function createEndpointsToAutentication(app: any, sessions: Array<any>) {
       
     })
 
-    app.post('/logout', async (req: Request, res: Response) => {
+    api.post('/logout', async (req: Request, res: Response) => {
         sessions = sessions.filter(data => { return data.authenticationToken != req.body.autenticationToken })
 
         res.json({message: "Usuário deslogado"})
