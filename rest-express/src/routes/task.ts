@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
 import { PrismaClient } from '@prisma/client'
-import { getIdOfUserSession } from '../autentication'
+import { getUserId } from '../autentication'
 
 const prisma = new PrismaClient()
 
-export function createEndpointsToTasks(api: any, sessions: Array<any>) {
+export function createRoutesToTasks(api: any, sessions: Array<any>) {
     api.get('/task', async (req: Request, res: Response) => {
 
         const userId = getUserId(req, sessions)
@@ -52,10 +52,4 @@ async function editTask(req: Request, res: Response){
     })
 
     res.status(202).json(modifiedTask)
-}
-
-function getUserId(req: Request, sessions: Array<any>){
-    const token = req.headers['authorization'] || ''
-    const userId = getIdOfUserSession(token, sessions)
-    return userId
 }

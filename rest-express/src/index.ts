@@ -1,9 +1,10 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import { createEndpointsToTasks } from './endpoints/tasks'
-import { createEndpointsToAutentication } from './endpoints/auth'
-import { createEndpointsToCycles } from './endpoints/cycles'
+import { createRoutesToTasks } from './routes/task'
+import { createRoutesToAutentication } from './routes/auth'
+import { createRoutesToCycles } from './routes/cycle'
 import { initializeSessions, isAuthenticated, isPermittedChange } from './autentication'
+import { createRoutesToDay } from './routes/day'
 
 export var sessions: Array<{ authenticationToken: string, userId: number }> = initializeSessions()
 
@@ -19,9 +20,10 @@ api.use(express.json())
 api.use(bodyParser.urlencoded({extended: true}))     
 api.use(cors())
 
-createEndpointsToTasks(api, sessions)
-createEndpointsToAutentication(api, sessions)
-createEndpointsToCycles(api, sessions)
+createRoutesToTasks(api, sessions)
+createRoutesToAutentication(api, sessions)
+createRoutesToCycles(api, sessions)
+createRoutesToDay(api, sessions)
 
 const server = api.listen(port, () =>
   console.log(`
