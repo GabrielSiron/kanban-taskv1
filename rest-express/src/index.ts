@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 import { createRoutesToTasks } from './routes/task'
 import { createRoutesToAutentication } from './routes/auth'
 import { createRoutesToCycles } from './routes/cycle'
-import { initializeSessions, isAuthenticated, isPermittedChange } from './autentication'
+import { initializeSessions, isAuthenticated, isOwner } from './autentication'
 import { createRoutesToDay } from './routes/day'
 
 export var sessions: Array<{ authenticationToken: string, userId: number }> = initializeSessions()
@@ -15,7 +15,7 @@ var cors = require('cors')
 const api = express()
 
 api.use(isAuthenticated)
-api.use(isPermittedChange)
+api.use(isOwner)
 api.use(express.json())
 api.use(bodyParser.urlencoded({extended: true}))     
 api.use(cors())
