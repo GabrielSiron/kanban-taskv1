@@ -3,54 +3,54 @@ import { sessions } from '../index'
 import { PrismaClient } from '@prisma/client' 
 import { Cycle, Task, Day } from '@prisma/client'
 
-export async function isPermittedChange(req: Request, res: Response, next: any){
+export async function isOwner(req: Request, res: Response, next: any){
   
-    if(req.method == 'PUT'){
-      const prisma = new PrismaClient()
-  
-      const entityOfRequest = getEntityInRequest(req)
-      const token = req.headers['authorization'] || ''
-      const userId = getIdOfUserSession(token, sessions)
-  
-      var result: Array<any> = []
-  
-      const id = getIdInRequest(req)
-      
-      if(entityOfRequest == "cycle"){
-        result = await prisma.$queryRaw<Cycle[]>`SELECT * FROM Cycle WHERE id = ${Number(id)}`
-      } 
-  
-      else if(entityOfRequest == "task"){
-        result = await prisma.$queryRaw<Task[]>`SELECT * FROM Task WHERE id = ${Number(id)}`
-      }
-  
-      else if(entityOfRequest == "day"){
-        result = await prisma.$queryRaw<Day[]>`SELECT * FROM day WHERE id = ${Number(id)}`
-      }
-      
-      const uniqueResult = result[0]
-  
-      if(uniqueResult.userId == userId) next()
-      else res.status(401).json({message: "Not Authorized"})
-      
-  
-    } else next()
-}
-  
-  export async function isAuthenticated(req: Request, res: Response, next: any) {
+  if(req.method == 'PUT' || req.method == 'DELETE'){
+    const prisma = new PrismaClient()
+
+    const entityOfRequest = getEntityInRequest(req)
+    const token = req.headers['authorization'] || ''
+    const userId = getIdOfUserSession(token, sessions)
+
+    var result: Array<any> = []
+
+    const id = getIdInRequest(req)
     
-    if(req.path != '/login' && req.path != '/signup' && req.path != '/logout'){
-      const token = req.headers['authorization'] || ''
-      
-      const userSession = sessions.filter(session => { return session.authenticationToken == token })
-      
-      if(userSession.length == 1) next()
-      else res.status(401).json({"message": "Not Authorized"})
-    } else {
-      next()
+    if(entityOfRequest == "cycle"){
+      result = await prisma.$queryRaw<Cycle[]>`SELECT * FROM Cycle WHERE id = ${Number(id)}`
+    } 
+
+    else if(entityOfRequest == "task"){
+      result = await prisma.$queryRaw<Task[]>`SELECT * FROM Task WHERE id = ${Number(id)}`
+    }
+
+    else if(entityOfRequest == "day"){
+      result = await prisma.$queryRaw<Day[]>`SELECT * FROM day WHERE id = ${Number(id)}`
     }
     
+    const uniqueResult = result[0]
+
+    if(uniqueResult.userId == userId) next()
+    else res.status(401).json({message: "Not Authorized"})
+    
+
+  } else next()
+}
+
+export async function isAuthenticated(req: Request, res: Response, next: any) {
+  
+  if(req.path != '/login' && req.path != '/signup' && req.path != '/logout'){
+    const token = req.headers['authorization'] || ''
+    
+    const userSession = sessions.filter(session => { return session.authenticationToken == token })
+    
+    if(userSession.length == 1) next()
+    else res.status(401).json({"message": "Not Authorized"})
+  } else {
+    next()
   }
+  
+}
   
 export function userIsAuthenticated(token: string, sessions: Array<any>){
     const userSession = sessions.filter(session => { return session.authenticationToken == token })

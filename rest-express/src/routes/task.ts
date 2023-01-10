@@ -18,7 +18,14 @@ export function createRoutesToTasks(api: any, sessions: Array<any>) {
     })
 
     api.put('/task/:id', async (req: Request, res: Response) => {
+        
         await editTask(req, res)
+    })
+
+    api.delete('/task/:id', async (req: Request, res: Response) => {
+
+        const { id } = req.params
+        await deleteTask(res, Number(id))
     })
 }
 
@@ -52,4 +59,19 @@ async function editTask(req: Request, res: Response){
     })
 
     res.status(202).json(modifiedTask)
+}
+
+async function deleteTask(res: Response, id: number){
+    
+    await prisma.task.delete({
+        where: {
+            id: id
+        }
+    }).then(() => {
+        
+        res.status(202).json({message: "deleted!"})
+    }).catch(err => {
+
+        res.status(402).json(err)
+    })
 }
