@@ -1,11 +1,16 @@
 import { Request, Response } from 'express'
-import { Cycle, PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 
 import { getIdOfUserSession } from '../autentication'
 
 const prisma = new PrismaClient()
 
 export function createRoutesToCycles(api: any, sessions: Array<any>) {
+    api.get('/cycle/:id', async (req: Request, res: Response) => {
+        const { id } = req.params
+        await getCycleByid(res, Number(id))
+    })
+
     api.get('/cycle', async (req: Request, res: Response) => {
 
         const userId = getUserId(req, sessions)
@@ -31,6 +36,19 @@ export function createRoutesToCycles(api: any, sessions: Array<any>) {
     })
 }
 
+async function getCycleByid(res: Response, id: number){
+    const cycle = await prisma.cycle.findUnique({
+        where: {
+            id: id
+        },
+        include: {
+            day: true
+        }
+    })
+
+    res.status(202).json(cycle)
+}
+
 async function getCycles(res: Response, userId: number){
     
     const cycles = await prisma.cycle.findMany(
@@ -45,7 +63,6 @@ async function getCycles(res: Response, userId: number){
     const allTasks = await getTasksInCycles(cycles)
     const doneTasks = await getTasksInCycles(cycles, true)
     
-
     res.status(202).json({...cycles, allTasks: allTasks, doneTasks: doneTasks})
 }
 

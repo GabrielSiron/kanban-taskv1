@@ -7,6 +7,12 @@ const prisma = new PrismaClient()
 
 export function createRoutesToDay(api: any, sessions: Array<any>){
 
+    api.get('/day/:id', async (req: Request, res: Response) => {
+
+        const { id } = req.params
+        await getDayById(res, Number(id))
+    })
+
     api.get('/day', async (req: Request, res: Response) => {
         
         const userId = getUserId(req, sessions)
@@ -43,6 +49,20 @@ async function getDays(res: Response, userId: number){
     )
 
     res.status(202).json(days)
+}
+
+async function getDayById(res: Response, id: number){
+
+    const day = await prisma.day.findUnique({
+        where: {
+            id: id
+        },
+        include: {
+            task: true
+        }
+    })
+
+    res.status(202).json(day)
 }
 
 async function createDay(req: Request, res: Response, userId: number){
