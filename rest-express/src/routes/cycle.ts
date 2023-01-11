@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { PrismaClient } from '@prisma/client'
+import { Cycle, PrismaClient } from '@prisma/client'
 
 import { getIdOfUserSession } from '../autentication'
 
@@ -35,11 +35,18 @@ async function getCycles(res: Response, userId: number){
     
     const cycles = await prisma.cycle.findMany(
         {
-            where: { userId: userId, }
+            where: { userId: userId, },
+            include: {
+                day: true
+            }
         }
     )
 
-    res.status(202).json(cycles)
+    const allTasks = await getTasksInCycles(cycles)
+    const doneTasks = await getTasksInCycles(cycles, true)
+    
+
+    res.status(202).json({...cycles, allTasks: allTasks, doneTasks: doneTasks})
 }
 
 async function createCycle(req: Request, res: Response, userId: number){
@@ -88,4 +95,33 @@ function getUserId(req: Request, sessions: Array<any>){
     const token = req.headers['authorization'] || ''
     const userId = getIdOfUserSession(token, sessions)
     return userId
+}
+
+async function getTasksInCycles(cycles: Array<any>, finishedTasks: boolean = false){
+
+    var qttTasks = 0
+
+    for(let cycle of cycles){
+        const dayId = cycle.day.id
+        
+        if(finishedTasks){
+            var count = await prisma.task.count({
+                where: {
+                    id: dayId,
+                    status: 'done'
+                },
+            })
+        } else {
+            var count = await prisma.task.count({
+                where: {
+                    id: dayId
+                },
+            })
+        }
+        
+        qttTasks += count
+    }
+    
+
+    return qttTasks
 }
