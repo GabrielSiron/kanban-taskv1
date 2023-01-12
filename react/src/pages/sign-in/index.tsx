@@ -1,11 +1,14 @@
 import React from 'react';
-import { SignInPage, CallToActionContainer, SignInContainer } from './style';
+import { AuthPage, CallToActionSide, AuthSide, MainTitle} from '../../styles/main-auth-structure';
+
 const SignIn = () => {
   return(
-    <SignInPage>
-        <CallToActionContainer></CallToActionContainer>
-        <SignInContainer></SignInContainer>
-    </SignInPage>
+    <AuthPage>
+      <CallToActionSide>
+        <MainTitle>Divide your tasks to conquer your results.</MainTitle>
+      </CallToActionSide>
+      <AuthSide></AuthSide>
+    </AuthPage>
   )
 }
 export default SignIn;

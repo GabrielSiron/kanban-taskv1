@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'inter-black';
+    src: url('../assets/font/Inter-Black.ttf');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'inter-light';
+    src: url('../assets/font/Inter-Light.ttf');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'inter-bold';
+    src: url('../assets/font/Inter-Bold.ttf');
+    font-display: swap;
+}
