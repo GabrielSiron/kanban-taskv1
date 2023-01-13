@@ -22,7 +22,7 @@ export const MainView = styled.div`
     backdrop-filter: blur(10px);
     background-color: rgba(27, 31, 69, .56);
     box-sizing: border-box;
-    padding: 85px 20px 20px 20px;
+    padding: 90px 20px 20px 20px;
 `;
 
 export const MainTitle = styled.h1`
@@ -39,9 +39,6 @@ export const SubTitle = styled.h2`
     font-family: 'inter-regular';
     margin-top: 20px;
 `
-export const AuthSide = styled.section`
-    
-`;
 
 export const ImageContainer = styled.div`
     position: absolute;
@@ -51,7 +48,6 @@ export const ImageContainer = styled.div`
     overflow: hidden;
 `;
 
-
 export const PoweredContainer = styled.div`
     display: flex;
     align-items: center;
@@ -59,9 +55,64 @@ export const PoweredContainer = styled.div`
     bottom: 20px;
 `;
 
-export const PoweredTxt = styled.div`
+export const PoweredTxt = styled.h3`
     color: #fff;
     font-size: 1.3rem;
     margin-right: 10px;
     font-family: 'inter-semibold';
+`;
+
+export const AuthSide = styled.section`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 90px 0;
+`;
+
+export const WelcomeContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+export const AuthTitle = styled.h4`
+    font-size: 5rem;
+    color: #171D51;
+    font-family: 'inter-bold';
+`;
+
+export const AuthSubTitle = styled.h5`
+    font-size: 1.5rem;
+    color: #171D51;
+    font-family: 'inter-light';
+    margin-top: 10px;
+`;
+export const Form = styled.form`
+    width: 410px;
+    /* background-color: green; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+`;
+
+export const SignInBuntton = styled.button`
+    width: 100%;
+    height: 60px;
+    border-radius: 8px;
+    font-family: 'inter-medium';
+    font-size: 1.5rem;
+    color: #fff;
+    background-color: #57A0FF;
+    border: none;
+    cursor: pointer;
+    transition: .2s ease-out;
+    margin-top: 80px;
+    &:hover{
+        background-color: #80b7ff;
+    }
+    &:active{
+        background-color: #377ad2;
+    }
 `;
