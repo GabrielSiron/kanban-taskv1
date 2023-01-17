@@ -2,6 +2,7 @@ import React from 'react';
 import { AuthPage, CallToActionSide, AuthSide, MainView, MainTitle, SubTitle, ImageContainer,
 PoweredContainer, PoweredTxt, WelcomeContainer,AuthTitle, AuthSubTitle, Form, SignInBuntton
 } from '../../styles/main-auth-structure';
+import { RemembermeContainer, RemembermeInput, RemembermeLabel } from './style'
 import Kanban from '../../assets/img/kanban.jpg';
 import QuickupLogo from '../../assets/img/quickup.svg'
 import InputComponent from '../../components/input/index';
@@ -30,7 +31,11 @@ const SignIn = () => {
         <Form>
           <InputComponent inputType={'email'}/>
           <InputComponent inputType={'password'}/>
-          <SignInBuntton>Sign up</SignInBuntton>
+          <RemembermeContainer>
+            <RemembermeInput type='checkbox' id='login' name='login'/>
+            <RemembermeLabel htmlFor='login'>Remember-me</RemembermeLabel>
+          </RemembermeContainer>
+          <SignInBuntton disabled={false}>Sign up</SignInBuntton>
         </Form>
       </AuthSide>
     </AuthPage>

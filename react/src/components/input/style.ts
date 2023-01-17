@@ -1,5 +1,7 @@
 import styled from "styled-components";
-
+type ProtoType = {
+    validation: any;
+};
 const CommonInput = styled.input`
     padding: 10px;
     font-size: 1.2rem;
@@ -9,13 +11,7 @@ const CommonInput = styled.input`
     outline: 0;
 `;
 
-export const Input = styled(CommonInput)`
-    width: 100%;
-    height: 60px;
-    background-color: rgba(0, 0, 0, .0);
-    border: 2px solid #6A6A6A;
-    margin-top: 30px;
-`
+
 export const InputPasswordContainer = styled.div`
     width: 100%;
     height: 60px;
@@ -47,3 +43,18 @@ export const PasswordPreview = styled.button`
     border: none;
     cursor: pointer;
 `
+export const IncorrectEmailWarning = styled.p`
+    align-self: flex-start;
+    font-family:'inter-regular';
+    color: #eb4d4b;
+    margin-top: 10px;
+`
+export const Input = styled(CommonInput).attrs((props:ProtoType)=>({
+    border: props.validation,
+}))<ProtoType>`
+    width: 100%;
+    height: 60px;
+    background-color: rgba(0, 0, 0, .0);
+    border: 2px solid ${(props)=>props.validation == null ? '#6A6A6A' : props.validation == false ? '#eb4d4b' : props.validation == true ? '#2ecc71' : ''};
+    margin-top: 30px;
+`;

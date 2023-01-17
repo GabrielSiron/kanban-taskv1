@@ -68,6 +68,7 @@ export const AuthSide = styled.section`
     align-items: center;
     box-sizing: border-box;
     padding: 90px 0;
+    justify-content: center;
 `;
 
 export const WelcomeContainer = styled.div`
@@ -89,7 +90,7 @@ export const AuthSubTitle = styled.h5`
     margin-top: 10px;
 `;
 export const Form = styled.form`
-    width: 410px;
+    width: 420px;
     /* background-color: green; */
     display: flex;
     flex-direction: column;
@@ -104,15 +105,16 @@ export const SignInBuntton = styled.button`
     font-family: 'inter-medium';
     font-size: 1.5rem;
     color: #fff;
-    background-color: #57A0FF;
+    background-color: ${props=>props.disabled ? '#AAD0FF' : '#57A0FF'};
+    cursor: ${props=>props.disabled ? 'default' : 'pointer'};
     border: none;
-    cursor: pointer;
     transition: .2s ease-out;
     margin-top: 80px;
     &:hover{
-        background-color: #80b7ff;
+        background-color: ${props=>props.disabled ? '#AAD0FF' : '#80b7ff'};
     }
     &:active{
-        background-color: #377ad2;
+        background-color: ${props=>props.disabled ? '#AAD0FF' : '#377ad2'};
     }
+
 `;
