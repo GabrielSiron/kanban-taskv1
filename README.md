@@ -19,3 +19,11 @@ $ npm run dev
 ```
 $ npx prisma studio
 ```
+
+## Log Mode
+
+if you need, create a instance of PrismaClient() as:
+
+```
+const prisma = new PrismaClient({ log: ['query', 'info'] })
+``` 
