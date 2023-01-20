@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const AuthPage = styled.div`
@@ -98,7 +99,7 @@ export const Form = styled.form`
     margin-top: 30px;
 `;
 
-export const SignInBuntton = styled.button`
+export const AuthButton = styled.button`
     width: 100%;
     height: 60px;
     border-radius: 8px;
@@ -118,3 +119,18 @@ export const SignInBuntton = styled.button`
     }
 
 `;
+
+export const LinkTo = styled(Link) `
+    width: 100%;
+    height: 60px;
+    font-family: 'inter-regular';
+    text-align: center;
+    margin-top: 40px;
+    font-size: 1.2rem;
+    color: #000;
+`
+
+export const Underlined = styled.span `
+    color: #57A0FF;
+    text-decoration: underline; 
+`

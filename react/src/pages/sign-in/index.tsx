@@ -1,13 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { AuthPage, CallToActionSide, AuthSide, MainView, MainTitle, SubTitle, ImageContainer,
-PoweredContainer, PoweredTxt, WelcomeContainer,AuthTitle, AuthSubTitle, Form, SignInBuntton
-} from '../../styles/main-auth-structure';
+PoweredContainer, PoweredTxt, WelcomeContainer,AuthTitle, AuthSubTitle, Form, AuthButton, LinkTo,
+Underlined } from '../../styles/main-auth-structure';
 import { RemembermeContainer, RemembermeInput, RemembermeLabel } from './style'
 import Kanban from '../../assets/img/kanban.jpg';
 import QuickupLogo from '../../assets/img/quickup.svg'
 import InputComponent from '../../components/input/index';
+import { Login } from '../../providers/restful/index'
 
 const SignIn = () => {
+  
   return(
     <AuthPage>
       <CallToActionSide>
@@ -35,7 +38,8 @@ const SignIn = () => {
             <RemembermeInput type='checkbox' id='login' name='login'/>
             <RemembermeLabel htmlFor='login'>Remember-me</RemembermeLabel>
           </RemembermeContainer>
-          <SignInBuntton disabled={false}>Sign up</SignInBuntton>
+          <AuthButton onClick={Login} type="button">Sign in</AuthButton>
+          <LinkTo to="/signup">Don't have an account? <Underlined>Sign up!</Underlined></LinkTo>
         </Form>
       </AuthSide>
     </AuthPage>
