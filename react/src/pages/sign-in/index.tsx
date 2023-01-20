@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import {useState, useEffect} from 'react';
 import { AuthPage, CallToActionSide, AuthSide, MainView, MainTitle, SubTitle, ImageContainer,
 PoweredContainer, PoweredTxt, WelcomeContainer,AuthTitle, AuthSubTitle, Form, AuthButton, LinkTo,
 Underlined } from '../../styles/main-auth-structure';
@@ -10,7 +9,19 @@ import InputComponent from '../../components/input/index';
 import { Login } from '../../providers/restful/index'
 
 const SignIn = () => {
-  
+  const [getEmail, setGetEmail] = useState('');
+  const [getPassword, setGetPassword]= useState('')
+  const [authEvent, setAuthEvent] = useState(false);
+
+  useEffect(()=>{
+    console.log('password: ', getPassword);
+    
+  },[getPassword])
+  useEffect(()=>{
+    console.log('email: ', getEmail);
+    
+  },[getEmail])
+
   return(
     <AuthPage>
       <CallToActionSide>
@@ -32,13 +43,13 @@ const SignIn = () => {
           <AuthSubTitle>Good to see you again!</AuthSubTitle>
         </WelcomeContainer>
         <Form>
-          <InputComponent inputType={'email'}/>
-          <InputComponent inputType={'password'}/>
+          <InputComponent inputType={'email'} getEmail={(content:any)=>{setGetEmail(content)}} getPassword={()=>{}}/>
+          <InputComponent inputType={'password'} getPassword={(content:any)=>{setGetPassword(content)}} getEmail={()=>{}}/>
           <RemembermeContainer>
             <RemembermeInput type='checkbox' id='login' name='login'/>
             <RemembermeLabel htmlFor='login'>Remember-me</RemembermeLabel>
           </RemembermeContainer>
-          <AuthButton onClick={Login} type="button">Sign in</AuthButton>
+          <AuthButton type="button" >Sign in</AuthButton>
           <LinkTo to="/signup">Don't have an account? <Underlined>Sign up!</Underlined></LinkTo>
         </Form>
       </AuthSide>

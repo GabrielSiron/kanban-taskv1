@@ -2,22 +2,25 @@ import React,{useEffect, useState} from 'react'
 import {Input, InputPasswordContainer, InputPassword, PasswordPreview, IncorrectEmailWarning} from './style';
 import Eye from '../../assets/icon/eye.svg';
 import EyeSlash from '../../assets/icon/eye-slash.svg';
-const InputComponent = (props:any) => {
-    let inputType:string = props.inputType;
+
+const InputComponent = ({inputType, getEmail, getPassword}: {inputType:any, getEmail:any, getPassword:any}) => {
+    /* console.log(trigger); */
     
     const [passwordIsVisible, setPasswordIsVisible] = useState(true);
     const [passwordTypeView, setPasswordTypeView] = useState('password');
     const [emailContent, setEmailContent] = useState('');
     const [emailValidation, setEmailValidation] = useState(null);
     const [nameContent, setNameContent] = useState('');
-    const [nameValidation, setNameValidation] = useState(null);
-
+    const [passwordContent, setPasswordContent] = useState('');
+    useEffect(()=>{
+        getEmail(emailContent);
+    }, [emailContent])
+    useEffect(()=>{
+        getPassword(passwordContent);
+    }, [passwordContent]);
+    
     const ChangeSecureText=()=>{
         setPasswordIsVisible(!passwordIsVisible);
-    }
-    
-    function testName(nameContent: string): boolean | null {
-        return nameContent.length > 3;
     }
 
     const NameValidation = (event: React.ChangeEvent<HTMLInputElement>)=>{
@@ -30,6 +33,9 @@ const InputComponent = (props:any) => {
         setEmailValidation(emailRegex.test(emailContent));
     }
 
+    const PasswordValidation = (event: React.ChangeEvent<HTMLInputElement>)=>{
+        setPasswordContent(event.target.value);
+    }
     useEffect(()=>{
         if (passwordIsVisible == true){
             setPasswordTypeView('password');
@@ -44,7 +50,7 @@ const InputComponent = (props:any) => {
             {
                 inputType == 'password' ?
                     <InputPasswordContainer>
-                        <InputPassword placeholder={inputType} required type={passwordTypeView}/>
+                        <InputPassword placeholder={inputType} onChange={PasswordValidation} required type={passwordTypeView}/>
                         <PasswordPreview type='button' onClick={ChangeSecureText}>
                             { passwordIsVisible ? <img src={Eye} width={22} height={16} alt="view password" draggable={false}/> : <img src={EyeSlash} width={25} height={20} alt="view password" draggable={false}/> }
                         </PasswordPreview>

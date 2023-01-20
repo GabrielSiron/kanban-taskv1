@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import { AuthPage, CallToActionSide, AuthSide, MainView, MainTitle, SubTitle, ImageContainer,
 PoweredContainer, PoweredTxt, WelcomeContainer,AuthTitle, AuthSubTitle, Form, AuthButton
 } from '../../styles/main-auth-structure';
@@ -7,6 +7,7 @@ import QuickupLogo from '../../assets/img/quickup.svg'
 import InputComponent from '../../components/input/index';
 
 const SignUp = () => {
+  const [getContent, setGetContent] = useState('');
     return(
       <AuthPage>
         <CallToActionSide>
@@ -28,9 +29,9 @@ const SignUp = () => {
               <AuthSubTitle>Not Good to see you again!</AuthSubTitle>
             </WelcomeContainer>
             <Form>
-              <InputComponent inputType={'name'}/>
-              <InputComponent inputType={'email'}/>
-              <InputComponent inputType={'password'}/>
+              {/* <InputComponent inputType={'name'} getContent={(item:any)=>{setGetContent(item)}} sendAuthEvent={AuthEvent}/>
+              <InputComponent inputType={'email'} getContent={(item:any)=>{setGetContent(item)}} sendAuthEvent={AuthEvent}/>
+              <InputComponent inputType={'password'} getContent={(item:any)=>{setGetContent(item)}} sendAuthEvent={AuthEvent}/> */}
               <AuthButton disabled={false}>Signup</AuthButton>
             </Form>
           </AuthSide>
