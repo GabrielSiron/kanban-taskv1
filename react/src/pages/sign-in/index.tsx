@@ -10,7 +10,7 @@ import { Login } from '../../services/restful/index'
 
 const SignIn = () => {
   const [getEmail, setGetEmail] = useState('');
-  const [getPassword, setGetPassword]= useState('')
+  const [getPassword, setGetPassword]= useState('');
 
   const Auth = ()=>{
     Login({getEmail, getPassword});

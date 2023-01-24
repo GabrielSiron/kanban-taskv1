@@ -17,7 +17,7 @@ export const Login = (body: any) => {
        let data:any = await response.json();
        return data.autenticationToken;
     }
-    GetToken()
+
     if(!localStorage.getItem('token')){
         GetToken().then((token:string)=>{
             localStorage.setItem("token", token);
