@@ -75,7 +75,7 @@ const InputComponent = ({inputType, getEmail, getPassword}: {inputType:any, getE
                 :
                 inputType == 'email' ?
                     <>
-                        <Input placeholder={inputType} onBlur={EmailValidation} validation={emailValidation} required/>
+                        <Input placeholder={inputType} onChange={EmailValidation} validation={emailValidation} required/>
                         {
                             emailValidation == false ?
                             <IncorrectInputWarning>{warningValue}</IncorrectInputWarning>
