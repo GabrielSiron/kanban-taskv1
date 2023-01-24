@@ -6,22 +6,15 @@ import { RemembermeContainer, RemembermeInput, RemembermeLabel } from './style'
 import Kanban from '../../assets/img/kanban.jpg';
 import QuickupLogo from '../../assets/img/quickup.svg'
 import InputComponent from '../../components/input/index';
-import { Login } from '../../providers/restful/index'
+import { Login } from '../../services/restful/index'
 
 const SignIn = () => {
   const [getEmail, setGetEmail] = useState('');
   const [getPassword, setGetPassword]= useState('')
-  const [authEvent, setAuthEvent] = useState(false);
 
-  useEffect(()=>{
-    console.log('password: ', getPassword);
-    
-  },[getPassword])
-  useEffect(()=>{
-    console.log('email: ', getEmail);
-    
-  },[getEmail])
-
+  const Auth = ()=>{
+    Login({getEmail, getPassword});
+  }
   return(
     <AuthPage>
       <CallToActionSide>
@@ -49,7 +42,7 @@ const SignIn = () => {
             <RemembermeInput type='checkbox' id='login' name='login'/>
             <RemembermeLabel htmlFor='login'>Remember-me</RemembermeLabel>
           </RemembermeContainer>
-          <AuthButton type="button" >Sign in</AuthButton>
+          <AuthButton onClick={Auth} type="button" >Sign in</AuthButton>
           <LinkTo to="/signup">Don't have an account? <Underlined>Sign up!</Underlined></LinkTo>
         </Form>
       </AuthSide>

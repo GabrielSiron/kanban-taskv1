@@ -1,34 +1,35 @@
-export const Login = (body: object) => {
 
-    var seen: Array<any> = [];
+export const Login = (body: any) => {
+    let authInfo:object = {
+        email:  body.getEmail,
+        password: body.getPassword
+    }
+    let authContent:any = JSON.stringify(authInfo);
 
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body, function(key, val) {
-            if (val != null && typeof val == "object") {
-                 if (seen.indexOf(val) >= 0) {
-                     return;
-                 }
-                 seen.push(val);
-             }
-             return val;
-         })
+        body: authContent
     };
 
+    const GetToken = async() =>{
+       let response:any = await fetch(`http://localhost:8081/login`, requestOptions);
+       let data:any = await response.json();
+       return data.autenticationToken;
+    }
+    GetToken()
     if(!localStorage.getItem('token')){
-        fetch(`http://localhost:8081/login`, requestOptions)
-        .then(response => {
-            console.log(response.json());
-            
+        GetToken().then((token:string)=>{
+            localStorage.setItem("token", token);
         })
-        .then((data:any) => {
-            localStorage.setItem('token', data.authenticationToken)
-        });
+    }
+    else{
+        alert('vc está logado');
+        
     }
 } 
 
-export const post = (route: string, body: object) => {
+/* export const post = (route: string, body: object) => {
 
     const requestOptions = {
         method: 'POST',
@@ -55,4 +56,4 @@ export const get = (route: string, body: object) => {
         
     })
     .then(data => {});
-}
+} */
