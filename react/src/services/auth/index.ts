@@ -10,14 +10,11 @@ export const Login = async(body:any, loading:any, token:any) => {
     .then(async(resp)=>{
         loading.setLoading(true);
         let data:any = await resp.json();
-        token.setToken(data.autenticationToken)
-    }).finally(()=>{
-        loading.setLoading(false);
-        
+        token.setToken(await data.autenticationToken)
     })
-    /* let data:any = await response.json();
-    return data.autenticationToken; */
-
+    .finally(()=>{
+        loading.setLoading(false);
+    });
 }
 
 /* export const post = (route: string, body: object) => {

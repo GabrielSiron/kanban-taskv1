@@ -1,11 +1,11 @@
 import React,{useEffect, useState, useContext} from 'react'
-import { UserContext } from '../../contexts/user'
+import  UserContext  from '../../contexts/user';
 import {Input, InputPasswordContainer, InputPassword, PasswordPreview, IncorrectInputWarning} from './style';
 import Eye from '../../assets/icon/eye.svg';
 import EyeSlash from '../../assets/icon/eye-slash.svg';
 
 const InputComponent = ({inputType}: {inputType:any}) => {
-    const {email, setEmail, password, setPassword} = useContext(UserContext);
+    const { setEmail, password, setPassword } = useContext(UserContext);
 
     const [passwordIsVisible, setPasswordIsVisible] = useState(true);
     const [passwordTypeView, setPasswordTypeView] = useState('password');
