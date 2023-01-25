@@ -1,4 +1,4 @@
-import React ,{useEffect, useState, useContext} from 'react';
+import React ,{ useState, useContext} from 'react';
 import Lottie from 'react-lottie-player';
 import { AuthPage, CallToActionSide, AuthSide, MainView, MainTitle, SubTitle, ImageContainer,
 PoweredContainer, PoweredTxt, WelcomeContainer,AuthTitle, AuthSubTitle, Form, AuthButton, LinkTo,
@@ -13,7 +13,7 @@ import { Login } from '../../services/auth/index';
 import LoadingIcon from '../../assets/animations/icons/loading.json';
 
 const SignIn = ( ) => {
-  const {email, password, token, setToken} = useContext(UserContext);
+  const { email, password, setToken } = useContext(UserContext);
 
   const [loading, setLoading] = useState(false);
 

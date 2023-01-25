@@ -1,5 +1,5 @@
 import  UserContext  from '../contexts/user';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -11,11 +11,14 @@ export const AppRoutes = ()=>{
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [token, setToken] = useState('');
-    
+    useEffect(()=>{
+        let sessionStorageToken:any = sessionStorage.getItem('token');
+        setToken(sessionStorageToken)
+    },[token])
     return(
         <Router>
             <UserContext.Provider value={{email, setEmail, password, setPassword, token, setToken}}>
-                { !token ?
+                { !token || token === 'undefined' ?
                     <Routes>
                         <Route path='/' element={<SignIn/>}/>
                         <Route path='/signup' element={<SignUp/>}></Route>

@@ -1,4 +1,5 @@
-export const Login = async(body:any, loading:any, token:any) => {
+export const Login = async(body:any, loading:any, setToken:any) => {
+    loading.setLoading(true);
     
     let authContent:any = JSON.stringify(body);
 
@@ -8,12 +9,10 @@ export const Login = async(body:any, loading:any, token:any) => {
         body: authContent
     })
     .then(async(resp)=>{
-        loading.setLoading(true);
-        let data:any = await resp.json();
-        token.setToken(await data.autenticationToken)
-    })
-    .finally(()=>{
         loading.setLoading(false);
+        let data:any = await resp.json();
+        sessionStorage.setItem('token', data.autenticationToken);
+        setToken.setToken(data.autenticationToken);
     });
 }
 
