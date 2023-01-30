@@ -4,7 +4,7 @@ PoweredContainer, PoweredTxt, WelcomeContainer,AuthTitle, AuthSubTitle, Form, Si
 } from '../../styles/main-auth-structure';
 import { RemembermeContainer, RemembermeInput, RemembermeLabel } from './style'
 import Kanban from '../../assets/img/kanban.jpg';
-import QuickupLogo from '../../assets/img/quickup.svg'
+import QuickupLogo from '../../assets/img/quickup.svg';
 import InputComponent from '../../components/input/index';
 
 const SignIn = () => {

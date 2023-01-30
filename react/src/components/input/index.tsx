@@ -2,6 +2,7 @@ import React,{useEffect, useState} from 'react'
 import {Input, InputPasswordContainer, InputPassword, PasswordPreview, IncorrectEmailWarning} from './style';
 import Eye from '../../assets/icon/eye.svg';
 import EyeSlash from '../../assets/icon/eye-slash.svg';
+
 const InputComponent = (props:any)=>{
     let inputType:string = props.inputType;
     const [passwordIsVisible, setPasswordIsVisible] = useState(true);
