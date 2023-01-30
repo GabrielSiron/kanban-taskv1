@@ -94,9 +94,7 @@ async function initializeSession(res: Response, user: User, password: string, se
     }
     
     if(result){
-      var sessionsWithoutActualUser = sessions.filter(data => { return data.userId == user.id })
 
-      if(sessionsWithoutActualUser.length == 0){
         const token = await generateToken(10)
         
         sessions.push({
@@ -105,11 +103,11 @@ async function initializeSession(res: Response, user: User, password: string, se
         })
 
         res.status(200).json({...user, autenticationToken: token})
-
-      } else {
-        res.status(401).json({message: "Usuário já logado"})
-      }
-    } else 
+      
+    } else {
+        
         res.json({message: "Senha ou email incorretos"})
+    }
+        
   })
 }
