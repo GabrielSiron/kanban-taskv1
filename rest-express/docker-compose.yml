@@ -1,0 +1,13 @@
+version: '3.3'
+
+services:
+  ts-node-docker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ts-node-docker
+    expose:
+      - '8081'
+    ports:
+      - '8081:8081'
+    command: npm run dev
