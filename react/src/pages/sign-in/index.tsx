@@ -1,4 +1,4 @@
-import React ,{ useState, useContext} from 'react';
+import React ,{ useState, useContext, useEffect} from 'react';
 import Lottie from 'react-lottie-player';
 import { AuthPage, CallToActionSide, AuthSide, MainView, MainTitle, SubTitle, ImageContainer,
 PoweredContainer, PoweredTxt, WelcomeContainer,AuthTitle, AuthSubTitle, Form, AuthButton, LinkTo,
@@ -9,18 +9,18 @@ import QuickupLogo from '../../assets/img/quickup.svg';
 
 import UserContext from '../../contexts/user';
 import InputComponent from '../../components/input/index';
-import { Login } from '../../services/auth/index';
+import { SignInRequest } from '../../services/auth/index';
 import LoadingIcon from '../../assets/animations/icons/loading.json';
 
 const SignIn = ( ) => {
-  const { email, password, setToken } = useContext(UserContext);
+  const { email, password, token, setToken, remember, setRemember } = useContext(UserContext);
 
   const [loading, setLoading] = useState(false);
 
   const Auth = async()=>{
-    await Login({email, password}, {setLoading}, {setToken});
+    await SignInRequest({email, password}, {setLoading}, {setToken}, {remember});
   }
-  
+
   return(
       <AuthPage>
         <CallToActionSide>
@@ -45,7 +45,7 @@ const SignIn = ( ) => {
             <InputComponent inputType={'email'}/>
             <InputComponent inputType={'password'}/>
             <RemembermeContainer>
-              <RemembermeInput type='checkbox' id='login' name='login'/>
+              <RemembermeInput type='checkbox' id='login' name='login' onChange={()=>{setRemember(!remember)}}/>
               <RemembermeLabel htmlFor='login'>Remember-me</RemembermeLabel>
             </RemembermeContainer>
             <AuthButton onClick={Auth} type="button" disabled={loading}>

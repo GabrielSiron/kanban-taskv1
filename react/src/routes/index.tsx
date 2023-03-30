@@ -11,13 +11,22 @@ export const AppRoutes = ()=>{
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [token, setToken] = useState('');
-    useEffect(()=>{
+    const [remember, setRemember] = useState(false);
         let sessionStorageToken:any = sessionStorage.getItem('token');
-        setToken(sessionStorageToken)
-    },[token])
+        let localStorageToken:any = localStorage.getItem('token');
+    useEffect(()=>{
+        if(token == ''){
+            if(sessionStorageToken != null){
+                setToken(sessionStorageToken);
+            }
+            else if(localStorageToken){
+                setToken(localStorageToken);
+            }
+        }
+    },[token]);
     return(
         <Router>
-            <UserContext.Provider value={{email, setEmail, password, setPassword, token, setToken}}>
+            <UserContext.Provider value={{email, setEmail, password, setPassword, token, setToken, remember, setRemember}}>
                 { !token || token === 'undefined' ?
                     <Routes>
                         <Route path='/' element={<SignIn/>}/>

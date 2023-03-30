@@ -1,4 +1,4 @@
-export const Login = async(body:any, loading:any, setToken:any) => {
+export const SignInRequest = async(body:any, loading:any, setToken:any, remember:any) => {
     loading.setLoading(true);
     
     let authContent:any = JSON.stringify(body);
@@ -13,6 +13,13 @@ export const Login = async(body:any, loading:any, setToken:any) => {
         let data:any = await resp.json();
         sessionStorage.setItem('token', data.autenticationToken);
         setToken.setToken(data.autenticationToken);
+
+        if(remember.remember==true){
+            localStorage.setItem('token', data.autenticationToken);
+        }
+        else{
+            localStorage.removeItem('token')
+        }
     });
 }
 
