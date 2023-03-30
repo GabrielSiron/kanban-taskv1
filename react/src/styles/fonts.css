@@ -1,0 +1,51 @@
+@font-face {
+    font-family: 'inter-black';
+    src: url('../assets/font/Inter-Black.ttf');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'inter-bold';
+    src: url('../assets/font/Inter-Bold.ttf');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'inter-extrabold';
+    src: url('../assets/font/Inter-ExtraBold.ttf');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'inter-extralight';
+    src: url('../assets/font/Inter-ExtraLight.ttf');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'inter-light';
+    src: url('../assets/font/Inter-Light.ttf');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'inter-medium';
+    src: url('../assets/font/Inter-Medium.ttf');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'inter-regular';
+    src: url('../assets/font/Inter-Regular.ttf');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'inter-semibold';
+    src: url('../assets/font/Inter-SemiBold.ttf');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'inter-thin';
+    src: url('../assets/font/Inter-Thin.ttf');
+    font-display: swap;
+}
